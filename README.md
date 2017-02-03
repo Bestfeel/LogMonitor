@@ -47,8 +47,8 @@ logMonitor.logpath=/Users/feel/githome/idea/LogMonitor/logMonitor.log
   {"code":201,"message":"日志系统嗅探开启成功","ref":"http://localhost:8080"}
  ```
  
- ![安全登入界面](image/01.png)
- ![日志系统嗅探界面](image/02.png)
+ ![安全登入界面](LogMonitor/image/01.png)
+ ![日志系统嗅探界面](LogMonitor/image/02.png)
  
  
  
