@@ -1,0 +1,10 @@
+.idea/
+*.iml
+
+*.log
+
+LogMonitor/target/
+LogMonitor/src/test/
+
+
+
