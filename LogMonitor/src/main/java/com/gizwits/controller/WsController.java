@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +40,6 @@ public class WsController {
     private SimpMessagingTemplate messagingTemplate;   //注入SimpMessagingTemplate 用于点对点消息发送
     @Autowired
     private ParticipantRepository participantRepository;
-    @Autowired
-    private SimpUserRegistry simpUserRegistry;
     @Autowired
     private LRUCache lruCache;
     private Tailer tailer;
@@ -149,6 +146,11 @@ public class WsController {
             return new ResponseMessage(Contants.ERROR_0, "日志系统嗅探开启失败,非法参数", request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
         }
 
+    }
+
+    @RequestMapping("")
+    public String index() {
+        return "index";
     }
 
     /**

@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.gizwits</groupId>
-    <artifactId>LogMonitor</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0</version>
-    <name>LogMonitor</name>
-    <url>http://maven.apache.org</url>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.5.RELEASE</version>
+        <version>1.5.0.RELEASE</version>
         <relativePath/>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>LogMonitor</artifactId>
+    <groupId>com.gizwits</groupId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>LogMonitor</name>
+    <url>http://maven.apache.org</url>
     <properties>
         <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,19 +52,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
-
     </dependencies>
-    <!--<dependencyManagement>-->
-    <!--<dependencies>-->
-    <!--<dependency>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-dependencies</artifactId>-->
-    <!--<version>${spring-boot.version}</version>-->
-    <!--<type>pom</type>-->
-    <!--<scope>import</scope>-->
-    <!--</dependency>-->
-    <!--</dependencies>-->
-    <!--</dependencyManagement>-->
     <build>
         <plugins>
             <plugin>
@@ -94,7 +82,6 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
