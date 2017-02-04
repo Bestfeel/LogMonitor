@@ -60,8 +60,6 @@ public class WsController {
 
         SimpMessageHeaderAccessor headers = SimpMessageHeaderAccessor.wrap(event.getMessage());
         String username = headers.getUser().getName();
-
-        System.out.println(lruCache.size());
         Map<String, String> activeSessions = participantRepository.getActiveSessions();
         if (!activeSessions.values().contains(username) || lruCache.isEmpty()) {
             tailFile(username);
@@ -78,17 +76,23 @@ public class WsController {
 
     private void tailFile(final String userName) {
         if (runFlag) {
-            tailer = new Tailer(new File(logpath), new TailerListenerAdapter() {
-                @Override
-                public void handle(String line) {
-                    if (runFlag) {
-                        messagingTemplate.convertAndSendToUser(userName, "/exchange/logMonitor", line);
+            File file = new File(logpath);
+            if (file.exists()) {
+                tailer = new Tailer(file, new TailerListenerAdapter() {
+                    @Override
+                    public void handle(String line) {
+                        if (runFlag) {
+                            messagingTemplate.convertAndSendToUser(userName, "/exchange/logMonitor", line);
+                        }
+                        lruCache.put(UUID.randomUUID().toString(), line);
                     }
-                    lruCache.put(UUID.randomUUID().toString(), line);
-                }
-            }, 500, true);
-            thread = new Thread(tailer);
-            thread.start();
+                }, 500, true);
+                thread = new Thread(tailer);
+                thread.start();
+            } else {
+                logger.error("file is not  exists ,{}", file);
+            }
+
         }
     }
 
@@ -97,7 +101,8 @@ public class WsController {
 
         Optional.ofNullable(participantRepository.getParticipant(event.getSessionId()))
                 .ifPresent(login -> {
-                    System.out.println("连接断开。。。。" + event.getUser().getName() + "。。。" + event.getSessionId());
+                    logger.info("连接断开：" + event.getUser().getName() + "。。。" + event.getSessionId());
+
                     participantRepository.removeParticipant(event.getSessionId());
 
                     if (participantRepository.getActiveSessions().isEmpty()) {
@@ -129,6 +134,7 @@ public class WsController {
             if (action.equalsIgnoreCase(Contants.ACTIONS[0])) {
                 runFlag = true;
                 Collection<String> values = participantRepository.getActiveSessions().values();
+
                 if (!values.isEmpty()) {
                     tailFile(values.stream().findFirst().get());
                 }

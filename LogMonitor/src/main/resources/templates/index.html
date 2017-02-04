@@ -59,7 +59,6 @@
                 $("#response").html();
                 setInterval(function () {
                     scrollTo(0, $("#response").height() - 200);
-                    console.info("定时器");
                 }, 10000);
                 stompClient.subscribe('/user/exchange/logMonitor', function (response) {
                     showResponse(response.body);
